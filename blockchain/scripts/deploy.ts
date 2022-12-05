@@ -18,7 +18,7 @@ async function main() {
   const library = await Library.deploy()
   await library.deployed();
 
-  const VALIDATOR_COUNT = 10;
+  const VALIDATOR_COUNT = 2;
   const JobMarket = await ethers.getContractFactory("JobMarket", {
     libraries: {
       SubmissionValidation: library.address,

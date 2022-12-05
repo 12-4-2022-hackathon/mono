@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./SubmissionValidation.sol";
 
+// import "hardhat/console.sol";
+
 contract JobMarket is Ownable, ReentrancyGuard, AccessControl {
 
     uint private _validatorCount;
@@ -88,11 +90,14 @@ contract JobMarket is Ownable, ReentrancyGuard, AccessControl {
                 submissionList[i] = jobs[jobId].submissions[approvedWorker];
             }
             address[] memory successfulWorkers = SubmissionValidation.performSettlement(submissionList);
+            // console.log("SuccessfulWorker length %s", successfulWorkers.length);
 
             // split 90% of bounty to the workers
             uint256 splitBounty = (jobs[jobId].bounty * 9) / 10;
             uint256 workerDividend = splitBounty / successfulWorkers.length;
             for (uint i = 0; i < successfulWorkers.length; ++i) {
+                // console.log("SuccessfulWorker %s", successfulWorkers[i]);
+                // console.log("SuccessfulWorker %d", workerDividend);
                 (bool success, ) = successfulWorkers[i].call{ value: workerDividend }("");
                 require(success, "Transfer failed");
             }

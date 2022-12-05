@@ -1,6 +1,6 @@
 {
-  "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-  "submission_address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+  "submission_address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
   "abi": [
     {
       "inputs": [
@@ -186,24 +186,6 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "jobId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "queueId",
-          "type": "uint256"
-        }
-      ],
-      "name": "approveWorkerRequest",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "bytes32",
           "name": "role",
           "type": "bytes32"
@@ -303,13 +285,8 @@
           "type": "bool"
         },
         {
-          "internalType": "bytes32",
-          "name": "workerRole",
-          "type": "bytes32"
-        },
-        {
           "internalType": "string",
-          "name": "filePath",
+          "name": "ipfsHash",
           "type": "string"
         },
         {
@@ -322,105 +299,54 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "listJobs",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "jobId",
+          "type": "uint256"
+        }
+      ],
+      "name": "listJobSubmissions",
       "outputs": [
         {
           "components": [
             {
-              "internalType": "uint256",
-              "name": "id",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "bounty",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "submitTime",
-              "type": "uint256"
-            },
-            {
-              "internalType": "string",
-              "name": "description",
-              "type": "string"
-            },
-            {
               "internalType": "address",
-              "name": "owner",
+              "name": "worker",
               "type": "address"
             },
             {
-              "internalType": "bool",
-              "name": "jobVerified",
-              "type": "bool"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "workerRole",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "string",
-              "name": "filePath",
-              "type": "string"
-            },
-            {
-              "internalType": "address[]",
-              "name": "approvedWorkers",
-              "type": "address[]"
-            },
-            {
               "internalType": "uint256",
-              "name": "submissionCount",
+              "name": "x1",
               "type": "uint256"
             },
             {
-              "components": [
-                {
-                  "internalType": "address",
-                  "name": "worker",
-                  "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "x1",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "y1",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "x2",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "y2",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "bool",
-                  "name": "submitted",
-                  "type": "bool"
-                },
-                {
-                  "internalType": "bool",
-                  "name": "verified",
-                  "type": "bool"
-                }
-              ],
-              "internalType": "struct SubmissionValidation.Metadata[]",
-              "name": "submissions",
-              "type": "tuple[]"
+              "internalType": "uint256",
+              "name": "y1",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "x2",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "y2",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "submitted",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "verified",
+              "type": "bool"
             }
           ],
-          "internalType": "struct JobMarket.JobReturn[]",
+          "internalType": "struct SubmissionValidation.Metadata[]",
           "name": "results",
           "type": "tuple[]"
         }
@@ -436,19 +362,6 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "listWorkerRequests",
-      "outputs": [
-        {
-          "internalType": "address[][]",
-          "name": "results",
-          "type": "address[][]"
         }
       ],
       "stateMutability": "view",
@@ -513,37 +426,13 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "roleMapping",
-      "outputs": [
-        {
-          "internalType": "bytes32",
-          "name": "",
-          "type": "bytes32"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "string",
           "name": "description",
           "type": "string"
         },
         {
           "internalType": "string",
-          "name": "filePath",
+          "name": "ipfsHash",
           "type": "string"
         }
       ],
@@ -588,25 +477,6 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "jobId",
-          "type": "uint256"
-        }
-      ],
-      "name": "submitWorkerRequest",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "bytes4",
           "name": "interfaceId",
           "type": "bytes4"
@@ -634,30 +504,6 @@
       "name": "transferOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "workerRequests",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     }
   ],

@@ -24,7 +24,7 @@ contract JobMarket is Ownable, ReentrancyGuard, AccessControl {
         string description;
         address owner;
         bool jobVerified;
-        string filePath;
+        string ipfsHash;
         address[] approvedWorkers;
         uint submissionCount;
         mapping(address => SubmissionValidation.Metadata) submissions;
@@ -36,7 +36,7 @@ contract JobMarket is Ownable, ReentrancyGuard, AccessControl {
     event JobResultSubmission(uint indexed jobId, address indexed worker, uint indexed submitTime);
     event JobCompletedConfirmation(uint indexed id);
 
-    function submitJob(string memory description, string memory filePath) public payable nonReentrant {
+    function submitJob(string memory description, string memory ipfsHash) public payable nonReentrant {
         // verify bounty
         uint256 bounty = msg.value;
         require(bounty > 0, "Bounty must be greater than 0");
@@ -50,7 +50,7 @@ contract JobMarket is Ownable, ReentrancyGuard, AccessControl {
         newJob.description = description;
         newJob.owner = msg.sender;
         newJob.jobVerified = false;
-        newJob.filePath = filePath;
+        newJob.ipfsHash = ipfsHash;
         newJob.submissionCount = 0;
 
         // transfer and emit

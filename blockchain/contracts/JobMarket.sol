@@ -116,6 +116,23 @@ contract JobMarket is Ownable, ReentrancyGuard, AccessControl {
         }
     }
 
+    struct JobReturn {
+        uint id;
+        uint256 bounty;
+        uint submitTime;
+        string description;
+        address owner;
+        bool jobVerified;
+        string ipfsHash;
+        address[] approvedWorkers;
+        uint submissionCount;
+        mapping(address => SubmissionValidation.Metadata) submissions;
+    }
+
+    function listjob(uint jobId) public view returns (JobReturn memory ) {
+
+    }
+
     function listNumJobs() public view returns (uint) {
         return jobs.length;
     }

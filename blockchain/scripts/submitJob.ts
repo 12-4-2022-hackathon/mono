@@ -62,6 +62,7 @@ async function main() {
     // listJobSubmissions
     console.log(await contract.listJobSubmissions(taskId))
     console.log(await contract.jobs(taskId))
+    console.log(await contract.listJob(0))
 
 }
 

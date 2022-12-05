@@ -12,9 +12,9 @@ import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlin
 import SyncAltOutlinedIcon from "@material-ui/icons/SyncAltOutlined"
 import Grid from "@material-ui/core/Grid"
 
-
 export default function Home() {
-	const { active, account, library, connector, activate, deactivate } = useWeb3React()
+	const web3 = useWeb3React()
+	const { active, account, library, connector, activate, deactivate } = web3
 
 	async function connect() {
 		try {
@@ -36,7 +36,7 @@ export default function Home() {
 					color: "black",
 					paddingLeft: "15%",
 					paddingRight: "15%",
-					paddingTop: "10%"
+					paddingTop: "10%",
 				}}
 			>
 				<img src={"/logo.png"} alt="logo" style={{ width: "20%", maxWidth: "500px" }} />
@@ -124,8 +124,7 @@ export default function Home() {
 				<p style={{ fontFamily: "Avenir Next", fontSize: "16px", fontWeight: "normal", marginTop: "2px" }}>
 					Join our satisfied customers and improve the accuracy and security of your data labeling process.
 				</p>
-				<div style={{ height: "50px" }} />
-				{" "}
+				<div style={{ height: "50px" }} />{" "}
 			</div>
 		</div>
 	)

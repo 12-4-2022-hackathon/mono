@@ -3,6 +3,8 @@ import { Background } from "../Components/Background"
 import { Canvas, createCanvas } from "node-canvas"
 import styled from "styled-components"
 import { useWeb3React } from "@web3-react/core"
+import { getFile } from "../Util/ipfs"
+import { getJob, submitJobResult } from "../Util/contract"
 
 const PageContainer = styled.div`
 	text-align: center;
@@ -28,24 +30,43 @@ const Button = styled.button`
 `
 
 export function LabelImages() {
+	const web3 = useWeb3React()
+	const { account } = web3
+
 	const canvasRef = useRef<any>(null)
 	const [startPos, setStartPos] = useState({ x: 0, y: 0 })
 	const [endPos, setEndPos] = useState({ x: 0, y: 0 })
 	const [imgurl, setImgurl] = useState<string | null>(null)
 	const [fileId, setFileId] = useState<string | null>(null)
+	const [jobId, setJobId] = useState<number | null>(null)
 	const [img, setImg] = useState<HTMLImageElement | null>(null)
 
-	const { account } = useWeb3React()
-
-	useEffect(() => {
-		setImgurl("https://i.imgur.com/mtbl1cr.jpeg")
-		setFileId("mtbl1cr")
-	}, [])
+	// useEffect(() => {
+	// 	// @Andrew fetch the function here
+	// 	// use hash and job_id
+	// 	new Promise((resolve, _reject) => {
+	// 		setTimeout(() => {
+	// 			resolve(1)
+	// 		}, 1000)
+	// 	}).then(() =>
+	// 		getJob(web3).then((data) => {
+	// 			let { hash, job_id } = data
+	// 			setJobId(job_id)
+	// 			getFile(hash).then((data) => {
+	// 				setImgurl(data)
+	// 				// setImgurl("https://i.imgur.com/mtbl1cr.jpeg")
+	// 				setFileId("test")
+	// 			})
+	// 		})
+	// 	)
+	// }, [])
 
 	useEffect(() => {
 		const img = new Image()
 		if (!imgurl) return
-		img.src = imgurl
+		// set image src with base 64 string
+		img.src = "data:image/png;base64," + imgurl
+		// img.src = imgurl
 		img.onload = async () => {
 			setImg(img)
 			await new Promise((resolve, _reject) => setTimeout(resolve, 500))
@@ -57,8 +78,6 @@ export function LabelImages() {
 			}
 		}
 	}, [imgurl])
-
-	useEffect(() => {})
 
 	const drawRectangle = (x: number, y: number) => {
 		if (!canvasRef.current) return
@@ -95,9 +114,10 @@ export function LabelImages() {
 
 	const onSubmit = () => {
 		let rect = canvasRef.current.getBoundingClientRect()
-		if (img == null) return
+		if (img == null || jobId == null) return
 		//send to backend
 		const data = {
+			job_id: jobId,
 			file_id: fileId,
 			worker_address: account,
 			x1: Math.floor((startPos.x / rect.width) * img.width),
@@ -105,11 +125,24 @@ export function LabelImages() {
 			x2: Math.floor((endPos.x / rect.width) * img.width),
 			y2: Math.floor((endPos.y / rect.height) * img.height),
 		}
+
+		submitJobResult(web3, jobId, data.x1, data.x2, data.y1, data.y2)
+
 		console.log(data)
 		void data
 	}
 
-	if (!img) return <div>loading</div>
+	if (!img) return <Button onClick={() => {
+		getJob(web3).then((data) => {
+			let { hash, job_id } = data
+			setJobId(job_id)
+			getFile(hash).then((data) => {
+				setImgurl(data)
+				// setImgurl("https://i.imgur.com/mtbl1cr.jpeg")
+				setFileId("test")
+			})
+		})
+	}}>Get Job</Button>
 
 	return (
 		<div>
@@ -128,8 +161,9 @@ export function LabelImages() {
 					style={{ cursor: "crosshair" }}
 				/>
 				<br />
-				{startPos.x == 0 && startPos.y == 0 && endPos.x == 0 && endPos.y == 0 ? "No selection made yet. Click and drag to select a region." :
-				`(${Math.floor(startPos.x)},${Math.floor(startPos.y)}) × (${Math.floor(endPos.x)},${Math.floor(endPos.y)})`}
+				{startPos.x == 0 && startPos.y == 0 && endPos.x == 0 && endPos.y == 0
+					? "No selection made yet. Click and drag to select a region."
+					: `(${Math.floor(startPos.x)},${Math.floor(startPos.y)}) × (${Math.floor(endPos.x)},${Math.floor(endPos.y)})`}
 				<br />
 				<Button onClick={onSubmit}>Submit</Button>
 			</PageContainer>

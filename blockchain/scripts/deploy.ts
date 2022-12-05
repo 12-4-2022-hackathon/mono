@@ -10,8 +10,8 @@ const MARKET_ABI = JSON.parse(
 const SUBMISSION_ABI = JSON.parse(
   fs.readFileSync(SUBMISSIONVALIDATION_ARTIFACT_PATH, "utf8")
 )["abi"];
-const BACKEND_DEPLOYMENT_INFO = '../backend/abi/JobMarket.json';
-const deployment = JSON.parse(fs.readFileSync(BACKEND_DEPLOYMENT_INFO, 'utf8'));
+const ABI_DEPLOYMENT_INFO = '../frontend/src/abi.json';
+const deployment = JSON.parse(fs.readFileSync(ABI_DEPLOYMENT_INFO, 'utf8'));
 
 async function main() {
   const Library = await ethers.getContractFactory("SubmissionValidation");
@@ -42,7 +42,7 @@ async function main() {
   );
   const deploymentString = JSON.stringify(deployment, null, 2);
   
-  fs.writeFileSync(BACKEND_DEPLOYMENT_INFO, deploymentString);
+  fs.writeFileSync(ABI_DEPLOYMENT_INFO, deploymentString);
 
 }
 

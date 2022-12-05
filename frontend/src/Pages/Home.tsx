@@ -40,6 +40,18 @@ export default function Home() {
 				}}
 			>
 				<img src={"/logo.png"} alt="logo" style={{ width: "20%", maxWidth: "500px" }} />
+				<h1 style={{
+						textAlign: "center",
+						fontSize: "80px",
+						fontWeight: "normal",
+						fontFamily: "Avenir Next",
+						paddingLeft: "5%",
+						paddingRight: "5%",
+					}}>
+						Block<span style={{
+							color:"F2580C"
+						}}>Turk</span>
+				</h1>
 				<h1
 					style={{
 						textAlign: "center",

@@ -134,7 +134,11 @@ export function LabelImages() {
 
 	if (!img) return <Button onClick={() => {
 		getJob(web3).then((data) => {
-			let { hash, job_id } = data
+			console.log(data)
+			// let { hash, job_id } = data
+			const hash = data[6]
+			const job_id = data[0]
+			// console.log(data[4]);
 			setJobId(job_id)
 			getFile(hash).then((data) => {
 				setImgurl(data)

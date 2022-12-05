@@ -51,14 +51,16 @@ export const getJob = async(web3: any) => {
 
     try {
         console.log(contract)
-
-        // get contract jobs
-
-        console.log(await contract.jobs())
-        console.log(await contract.methods.jobs().call())
-        const len = await contract.jobs.length
-        const res = await contract.jobs[len-1] 
-        return res
+        const res = await contract.methods.listNumJobs().call({
+            from: web3.account,
+            gas: await getGasEstimate(),
+        })
+        console.log(res)
+        const jobRes = await contract.methods.listJob(res-1).call({
+            from: web3.account,
+            gas: await getGasEstimate(),
+        })
+        return jobRes
     } catch (e) {
         throw e
     }
